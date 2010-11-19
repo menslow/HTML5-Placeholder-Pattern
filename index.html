@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>Placeholder Pattern</title>
+	</head>
+
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
+	<script type="text/javascript">
+
+	var App = function(){
+
+		/* private */
+		var default_topic = 'Placeholder Text';
+
+		/* HTML5 elememt support tester */
+		var element_supports_attribute = function(element,attribute){
+			var test = document.createElement(element);
+			if (attribute in test) {
+				return true;
+			} else {
+				return false;
+			}
+		};
+
+		/* end private */
+
+		return {
+
+			init: function() {
+
+				if (!element_supports_attribute('input','placeholder')) {
+					App.add_focus_events();
+				}
+
+			},
+
+			add_focus_events: function(){
+
+				$('#foo').val(default_topic);
+
+				$('#foo').focus(function(){
+					if($(this).val()===default_topic){
+						$(this).val('');
+					}
+				});
+				$('#foo').blur(function(){
+					if($(this).val()===''){
+						$(this).val(default_topic);
+					}
+				});
+			}
+
+		};
+	}();
+
+	$(document).ready(function($j){
+		App.init();
+	});
+	</script>
+
+	<body>
+
+		<form id="foo_form" name="foo_form" action="" method="post" accept-charset="UTF-8">
+			<label for="foo">Bar</label>
+			<input id="foo" name="foo" type="text" placeholder="Placeholder Text" />
+			<input type="submit" value="submit" />
+		</form>
+
+	</body>
+</html>
